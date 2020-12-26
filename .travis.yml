@@ -11,3 +11,4 @@ deploy:
   local_dir: asd
   on:
     branch: main
+
