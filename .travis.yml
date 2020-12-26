@@ -10,4 +10,4 @@ deploy:
   keep_history: true
   local_dir: asd
   on:
-    branch: master
+    branch: main
