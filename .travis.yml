@@ -4,11 +4,18 @@ node_js:
 script: echo hello; echo $GITHUB_TOKEN
 
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  local_dir: asd
-  on:
-    branch: main
-
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep_history: true
+    local_dir: asd
+    on:
+      branch: main
+  - provider: npm
+    skip_cleanup: true
+    email: "giacomo.venturini3@gmail.com"
+    #api_key: $NPM_TOKEN
+    token: $NPM_TOKEN
+    on:
+      branch: main
+      tags: true
