@@ -16,7 +16,7 @@ deploy:
     skip_cleanup: true
     email: "giacomo.venturini3@gmail.com"
     api_token: $NPM_TOKEN
-    token: $NPM_TOKEN
+    #token: $NPM_TOKEN
     on:
       branch: main
       tags: true
