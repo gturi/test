@@ -2,7 +2,8 @@
   "name": "travis-test-940105ba5a9f",
   "version": "1.0.0",
   "description": "a repo where I test stuff",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "echo 'build ok'",
     "test": "echo 'test ok'",
@@ -10,7 +11,7 @@
     "prepare": "npm run build"
   },
   "files": [
-    "index.js"
+    "dist/**/*"
   ],
   "repository": {
     "type": "git",
