@@ -28,6 +28,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: server/dist/${{ matrix.artifactName }}
-          asset_name: ${{ matrix.artifactName }}
+          #asset_name: ${{ matrix.artifactName }}
           tag: ${{ github.ref }}
           overwrite: true
