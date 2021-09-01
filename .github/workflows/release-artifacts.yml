@@ -10,11 +10,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifactName: youtubeDlaas-linux
+            artifactName: main-linux
           - os: windows-latest
-            artifactName: youtubeDlaas-windows.exe
+            artifactName: main-windows.exe
           - os: macos-latest
-            artifactName: youtubeDlaas-macos.app
+            artifactName: main-macos.app
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
@@ -26,6 +26,6 @@ jobs:
       - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
       - uses: JasonEtco/upload-to-release@master
         with:
-          args: server/dist/${{ matrix.artifactName }} application/x-executable
+          args: server/dist/${{ matrix.artifactName }} application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
