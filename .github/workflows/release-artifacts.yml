@@ -1,6 +1,9 @@
 name: release-artifacts
 
-on: release
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   release:
@@ -24,8 +27,10 @@ jobs:
         with:
           python-version: '3.x'
       - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
-      - uses: JasonEtco/upload-to-release@master
+      - uses: svenstaro/upload-release-action@v2
         with:
-          args: server/dist/${{ matrix.artifactName }} application/octet-stream
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: server/dist/${{ matrix.artifactName }}
+          asset_name: ${{ matrix.artifactName }}
+          tag: ${{ github.ref }}
+          overwrite: true
