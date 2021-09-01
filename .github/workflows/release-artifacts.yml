@@ -14,7 +14,7 @@ jobs:
           - os: windows-latest
             artifactName: main-windows.exe
           - os: macos-latest
-            artifactName: main-macos
+            artifactName: main-macos.app
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
