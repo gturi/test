@@ -24,10 +24,6 @@ jobs:
         with:
           python-version: '3.x'
       - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
-      - uses: svenstaro/upload-release-action@v2
+      - uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: server/dist/${{ matrix.artifactName }}
-          #asset_name: ${{ matrix.artifactName }}
-          tag: ${{ github.ref }}
-          overwrite: true
+          files: server/dist/${{ matrix.artifactName }}
