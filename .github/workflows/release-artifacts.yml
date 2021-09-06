@@ -11,14 +11,10 @@ jobs:
         include:
           - os: ubuntu-latest
             artifactName: main-linux
-            uploadArtifactName: main-linux
           - os: windows-latest
             artifactName: main-windows.exe
-            uploadArtifactName: main-windows.exe
           - os: macos-latest
             artifactName: main-macos
-            # necessary to avoid bad request
-            uploadArtifactName: main-macos.app
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
@@ -28,10 +24,6 @@ jobs:
         with:
           python-version: '3.x'
       - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
-      - uses: svenstaro/upload-release-action@v2
+      - uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: server/dist/${{ matrix.artifactName }}
-          asset_name: ${{ matrix.uploadArtifactName }}
-          tag: ${{ github.ref }}
-          overwrite: true
+          files: server/dist/${{ matrix.artifactName }}
