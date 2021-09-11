@@ -41,6 +41,4 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/main-linux
-            dist/main-windows.exe
-            dist/main-macos
+            dist/*
