@@ -3,8 +3,8 @@ name: release-artifacts
 on: release
 
 jobs:
-  release:
-    name: Release for ${{ matrix.os }}
+  create-artifact:
+    name: Create artifact for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -24,6 +24,21 @@ jobs:
         with:
           python-version: '3.x'
       - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.artifactName }}
+          path: server/dist/${{ matrix.artifactName }}
+  release:
+    needs: [create-artifact]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          path: dist
       - uses: softprops/action-gh-release@v1
         with:
-          files: server/dist/${{ matrix.artifactName }}
+          files: |
+            dist/main-linux
+            dist/main-windows.exe
+            dist/main-macos
