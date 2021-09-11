@@ -38,6 +38,10 @@ jobs:
         with:
           path: dist
       - run: ls -R
-      - uses: softprops/action-gh-release@v1
+      - uses: svenstaro/upload-release-action@v2
         with:
-          files: ./dist/*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
