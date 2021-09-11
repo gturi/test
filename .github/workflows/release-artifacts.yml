@@ -1,6 +1,6 @@
 name: release-artifacts
 
-on: release
+on: push
 
 jobs:
   create-artifact:
@@ -37,6 +37,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           path: dist
+      - run: ls -R
       - uses: softprops/action-gh-release@v1
         with:
           files: |
