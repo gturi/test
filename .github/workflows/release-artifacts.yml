@@ -41,6 +41,7 @@ jobs:
         with:
           path: dist
       - run: ls -R
+      - run: mkdir release
       - run: chmod u+x dist/main-linux
       - run: tar -zcvf release/main-linux.tar.gz dist/main-linux
       - run: zip release/main-windows.zip dist/main-windows.exe
