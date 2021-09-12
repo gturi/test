@@ -14,7 +14,7 @@ jobs:
           - os: windows-latest
             artifactName: main-windows.exe
           - os: macos-latest
-            artifactName: main-macos
+            artifactName: main-macos.app
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
@@ -38,10 +38,15 @@ jobs:
         with:
           path: dist
       - run: ls -R
+      - run: chmod u+x dist/main-linux
+      - run: tar -zcvf dist/main-linux.tar.gz dist/main-linux
+      - run: zip dist/main-windows.zip dist/main-windows.exe
+      - run: zip dist/main-macos.zip dist/main-macos.app
+      - run: ls -R
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/*
+          file: dist/*(.tar.gz|.zip)
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
