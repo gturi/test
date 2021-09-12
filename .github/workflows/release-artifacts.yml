@@ -39,16 +39,17 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           path: dist
-      - run: ls -R
       - run: pwd
       - run: echo $HOME
       - run: mkdir `pwd`/release
+      - run: ls -R
       - run: |
+          DIR=`pwd`
           cd dist
-          zip `pwd`/release/main-windows.zip main-windows.exe
-          zip `pwd`/release/main-macos.zip main-macos.app
+          zip $DIR/release/main-windows.zip main-windows.exe
+          zip $DIR/release/main-macos.zip main-macos.app
           chmod u+x main-linux
-          tar -zcvf `pwd`/release/main-linux.tar.gz main-linux
+          tar -zcvf $DIR/release/main-linux.tar.gz main-linux
       - run: ls -laR
       - uses: svenstaro/upload-release-action@v2
         with:
