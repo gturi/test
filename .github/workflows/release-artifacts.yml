@@ -36,17 +36,18 @@ jobs:
     needs: [create-artifact]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
           path: dist
       - run: ls -R
+      - run: pwd
       - run: |
           mkdir release
-          zip -jv release/main-windows.zip dist/main-windows.exe
-          zip -jv release/main-macos.zip dist/main-macos.app
-          chmod u+x dist/main-linux
-          tar -zcvf release/main-linux.tar.gz --directory=dist main-linux
+          cd dist
+          zip release/main-windows.zip main-windows.exe
+          zip release/main-macos.zip main-macos.app
+          chmod u+x main-linux
+          tar -zcvf release/main-linux.tar.gz main-linux
       - run: ls -laR
       - uses: svenstaro/upload-release-action@v2
         with:
