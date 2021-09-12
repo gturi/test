@@ -42,18 +42,17 @@ jobs:
       - run: ls -R
       - run: pwd
       - run: echo $HOME
-      - run: |
-          mkdir $HOME/release
-          cd dist
-          zip $HOME/release/main-windows.zip main-windows.exe
-          zip $HOME/release/main-macos.zip main-macos.app
-          chmod u+x main-linux
-          tar -zcvf $HOME/release/main-linux.tar.gz main-linux
+      - run: mkdir `pwd`/release
+      - run: cd dist
+      - run: zip `pwd`/release/main-windows.zip main-windows.exe
+      - run: zip `pwd`/release/main-macos.zip main-macos.app
+      - run: chmod u+x main-linux
+      - run: tar -zcvf `pwd`/release/main-linux.tar.gz main-linux
       - run: ls -laR
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: $HOME/release/*
+          file: release/*
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
