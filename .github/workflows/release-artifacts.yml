@@ -43,11 +43,12 @@ jobs:
       - run: pwd
       - run: echo $HOME
       - run: mkdir `pwd`/release
-      - run: cd dist
-      - run: zip `pwd`/release/main-windows.zip main-windows.exe
-      - run: zip `pwd`/release/main-macos.zip main-macos.app
-      - run: chmod u+x main-linux
-      - run: tar -zcvf `pwd`/release/main-linux.tar.gz main-linux
+      - run: |
+          cd dist
+          zip `pwd`/release/main-windows.zip main-windows.exe
+          zip `pwd`/release/main-macos.zip main-macos.app
+          chmod u+x main-linux
+          tar -zcvf `pwd`/release/main-linux.tar.gz main-linux
       - run: ls -laR
       - uses: svenstaro/upload-release-action@v2
         with:
