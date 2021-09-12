@@ -1,6 +1,9 @@
 name: release-artifacts
 
-on: push
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   create-artifact:
@@ -39,14 +42,14 @@ jobs:
           path: dist
       - run: ls -R
       - run: chmod u+x dist/main-linux
-      - run: tar -zcvf dist/main-linux.tar.gz dist/main-linux
-      - run: zip dist/main-windows.zip dist/main-windows.exe
-      - run: zip dist/main-macos.zip dist/main-macos.app
+      - run: tar -zcvf release/main-linux.tar.gz dist/main-linux
+      - run: zip release/main-windows.zip dist/main-windows.exe
+      - run: zip release/main-macos.zip dist/main-macos.app
       - run: ls -R
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/*(.tar.gz|.zip)
+          file: release/*
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
