@@ -43,8 +43,8 @@ jobs:
       - run: ls -R
       - run: |
           mkdir release
-          zip -j release/main-windows.zip dist/main-windows.exe
-          zip -j release/main-macos.zip dist/main-macos.app
+          zip -jv release/main-windows.zip dist/main-windows.exe
+          zip -jv release/main-macos.zip dist/main-macos.app
           chmod u+x dist/main-linux
           tar -zcvf release/main-linux.tar.gz --directory=dist main-linux
       - run: ls -laR
