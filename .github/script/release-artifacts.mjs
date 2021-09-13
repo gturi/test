@@ -11,7 +11,7 @@ process.chdir(serverDir);
 
 // install server release requirements
 console.log('installing server release requirements');
-execSync('python3 -m pip install -r requirements.txt');
+execSync('python -m pip install -r requirements.txt');
 
 // create ${appName} executable in server/dist
 const generateExecutableCmd = `pyinstaller src/main.py --onefile --name ${appName}`;
