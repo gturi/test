@@ -51,10 +51,6 @@ jobs:
           chmod u+x main-linux
           tar -zcvf $DIR/release/main-linux.tar.gz main-linux
       - run: ls -laR
-      - uses: svenstaro/upload-release-action@v2
+      - uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: release/*
-          tag: ${{ github.ref }}
-          overwrite: true
-          file_glob: true
+          files: release/*
