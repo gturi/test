@@ -5,7 +5,7 @@ const appName = process.argv[2] || 'youtube-dl-aas';
 const zipName = process.argv[3] || `${appName}.zip`;
 
 function getCmdOutput(cmd) {
-  return execSync(cmd).toString('utf8').trim().replace(/(\r\n|\n|\r)/gm, "");
+  return execSync(cmd).toString('utf8').trim().replace(/(\r\n|\n|\r)/gm, '');
 }
 
 const platform = process.platform;
@@ -13,7 +13,6 @@ let compressionCmd;
 let outDir;
 switch(platform) {
   case 'linux':
-    console.log(execSync('ls -laR').toString('utf8'));
     outDir = `${getCmdOutput('pwd')}/server/dist`;
     compressionCmd = `tar -zcvf ${outDir}/${zipName} --directory=${outDir} ${appName}`;
     break;

@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Multiple downloads</h1>
+
+<mat-dialog-content id="list-container">
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let url of urls; index as i">
+      <mat-form-field class="url-form-field">
+        <mat-label>Link {{i+1}}</mat-label>
+        <input matInput type="text" name="url-{{i}}" [(ngModel)]="urls[i]">
+        <button mat-button *ngIf="isRemoveEnabled(i)" matSuffix mat-icon-button aria-label="Clear" (click)="remove(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button *ngIf="isAddEnabled(i)" matSuffix mat-icon-button aria-label="Add" (click)="add(i)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" mat-dialog (click)="close()">Apply</button>
+</mat-dialog-actions>

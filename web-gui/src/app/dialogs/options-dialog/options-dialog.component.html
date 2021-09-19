@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Youtube-dl options</h1>
+
+<p>Options should be declared in JSON format</p>
+
+<mat-dialog-content class="text-area-container">
+  <textarea [(ngModel)]="youtubeDlOptions"></textarea>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)=showYoutubeDlDocs()>Show Docs</button>
+  <button mat-raised-button mat-dialog (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" mat-dialog (click)="apply()">Apply</button>
+</mat-dialog-actions>

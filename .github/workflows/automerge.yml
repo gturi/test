@@ -1,0 +1,31 @@
+name: automerge
+
+on:
+  pull_request:
+    branches:
+      - develop
+  check_suite:
+    types:
+      - completed
+  status: {}
+
+jobs:
+  log-github-actor:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.actor }}
+  automerge:
+    needs: log-github-actor
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "DanySK/yaagha@master"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_FORKS: "false"
+          MERGE_LABELS: "dependencies"
+          BLOCK_LABELS: "blocked, wontfix, invalid"
+          MERGE_METHOD: "rebase"
+          DELETE_BRANCH_ON_CLOSE: "true"
+          GIT_USER_NAME: "gventurini"
+          GIT_USER_EMAIL: "giacomo.venturini3@gmail.com"

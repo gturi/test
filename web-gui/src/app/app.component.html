@@ -1,0 +1,61 @@
+<div id="server-info">
+  Page address: <a href="http://{{hostAddress}}:5000" target="_blank">
+    {{hostAddress}}:5000
+  </a>
+  <br>
+  Server version: {{serverVersion}}
+  <br>
+  Youtube dl version: {{youtubeDlVersion}}
+  <br>
+  <a href="https://ytdl-org.github.io/youtube-dl/supportedsites.html" target="_blank">
+    Supported sites
+  </a>
+</div>
+
+<div class="main">
+
+  <div class="title-container">Youtube-dl GUI</div>
+
+  <div class="form-container">
+    <form name="urlForm">
+      <mat-form-field class="url-form-field" [style.width.px]=500>
+        <!-- one download -->
+        <mat-label *ngIf="!isMultipleDownload()">Link</mat-label>
+        <input *ngIf="!isMultipleDownload()" matInput type="text" name="url" [(ngModel)]="urls[0]">
+        <!-- multiple downloads -->
+        <input *ngIf="isMultipleDownload()" matInput type="text" name="url" [ngModel]="urls.length + ' links selected'"
+          readonly="readonly">
+
+        <button mat-button matSuffix mat-icon-button aria-label="Add" (click)="openMultipleDownloadDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="button-container">
+
+        <div class="configuration-group">
+          <button class="configuration" mat-raised-button (click)=options()>Options</button>
+
+          <mat-form-field class="configuration" appearance="fill">
+            <mat-label>Format</mat-label>
+            <mat-select (selectionChange)="setSelectedFormat($event)">
+              <mat-option>Auto</mat-option>
+              <mat-option *ngFor="let format of availableFormats" [value]="format">
+                {{format}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="configuration-group">
+          <button id="downloadButton" mat-raised-button color="primary" [disabled]="isDownloadDisabled()"
+            (click)=download()>Download</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <mat-spinner *ngIf="downloadInProgress"></mat-spinner>
+
+</div>

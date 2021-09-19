@@ -1,0 +1,38 @@
+name: upgrade-youtube-dl
+
+on:
+  schedule:
+    - cron:  '00 9 * * *'
+
+jobs:
+  upgrade-youtube-dl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - run: |
+          cd server
+          python -m pip install -r requirements.txt 
+          python -m pip install --upgrade youtube_dl
+          python -m pip freeze > requirements.txt
+          cd ..
+          if git diff-index --quiet HEAD --; \
+          then echo "CHANGES=false" >> $GITHUB_ENV; \
+          else echo "CHANGES=true" >> $GITHUB_ENV; \
+          fi
+      - uses: peter-evans/create-pull-request@v3
+        if: ${{ env.CHANGES == 'true' }}
+        with:
+          title: 'upgrade youtube dl library'
+          commit-message: 'upgrade youtube dl library'
+          branch: 'python/upgrade-youtube-dl'
+          base: 'develop'
+          delete-branch: true
+          labels: 'dependencies,python'
+          # repo scoped token is necessary to make the pull request trigger other actions
+          # unfortunately this changes the pull request author to the repo owner
+          token: ${{ secrets.YOUTUBE_DL_AAS_GITHUB_TOKEN }}

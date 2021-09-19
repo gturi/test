@@ -1,26 +1,23 @@
 name: release-artifacts
 
-on:
-  push:
-    tags:
-      - '*'
+on: release
 
 jobs:
   create-artifact:
-    name: Create artifact for ${{ matrix.os }}
+    name: Gui app release for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
-            appName: main-linux
-            artifactName: main-linux.tar.gz
+            appName: youtubeDlaas-linux
+            artifactName: youtubeDlaas-linux.tar.gz
           - os: windows-latest
-            appName: main-windows.exe
-            artifactName: main-windows.zip
+            appName: youtubeDlaas-windows.exe
+            artifactName: youtubeDlaas-windows.zip
           - os: macos-latest
-            appName: main-macos.app
-            artifactName: main-macos.zip
+            appName: youtubeDlaas-macos.app
+            artifactName: youtubeDlaas-macos.zip
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
@@ -29,15 +26,52 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - run: node .github/script/release-artifacts.mjs ${{ matrix.appName }}
+      - run: >
+          node .github/script/create-artifacts.mjs
+          ${{ matrix.appName }}
+          main_qt.py
+          requirements,requirements.gui,requirements.dev
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.appName }}
           path: server/dist/${{ matrix.appName }}
+      - run: node .github/script/zip-artifacts.mjs ${{ matrix.appName }} ${{ matrix.artifactName }}
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: server/dist/${{ matrix.artifactName }}
+  create-headless-artifact:
+    name: Headless app release for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            appName: youtubeDlaas-linux-headless
+            artifactName: youtubeDlaas-linux-headless.tar.gz
+          - os: windows-latest
+            appName: youtubeDlaas-windows-headless.exe
+            artifactName: youtubeDlaas-windows-headless.zip
+          - os: macos-latest
+            appName: youtubeDlaas-macos-headless.app
+            artifactName: youtubeDlaas-macos-headless.zip
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
       - run: >
-          node .github/script/zip-artifacts.mjs
+          node .github/script/create-artifacts.mjs
           ${{ matrix.appName }}
-          ${{ matrix.artifactName }}
+          main.py
+          requirements,requirements.dev
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.appName }}
+          path: server/dist/${{ matrix.appName }}
+      - run: node .github/script/zip-artifacts.mjs ${{ matrix.appName }} ${{ matrix.artifactName }}
       - uses: softprops/action-gh-release@v1
         with:
           files: server/dist/${{ matrix.artifactName }}

@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+    font-size: larger;
+}
+
+#list-container {
+    display: flex;
+    justify-content: center;
+    height: 75%;
+}
+
+mat-form-field, mat-list {
+    width: 90%;
+}
