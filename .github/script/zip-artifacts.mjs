@@ -10,19 +10,19 @@ let compressionCmd;
 switch(platform){
   case 'linux':
     console.log('LINUX ls');
-    console.log(execSync('ls -laR'));
-    console.log(execSync('pwd'));
+    console.log(execSync('ls -laR').toString('utf8'));
+    console.log(execSync('pwd').toString('utf8'));
     compressionCmd = `tar -zcvf server/dist/${zipName} server/dist/${appName}`
     break;
   case 'win32':
     console.log('WIN ls');
-    console.log(execSync('dir'));
+    console.log(execSync('dir').toString('utf8'));
     compressionCmd = `tar.exe -a -c -f server/dist/${zipName} server/dist/${appName}`
     break;
   case 'darwin':
     console.log('MAC ls');
-    console.log(execSync('ls -laR'));
-    console.log(execSync('pwd'));
+    console.log(execSync('ls -laR').toString('utf8'));
+    console.log(execSync('pwd').toString('utf8'));
     compressionCmd = `zip server/dist/${zipName} server/dist/${appName}`
     break;
   default:
