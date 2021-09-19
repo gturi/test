@@ -5,9 +5,9 @@ import * as path from 'path';
 // Default value `youtube-dl-aas` if no args provided via CLI.
 const appName = process.argv[2] || 'youtube-dl-aas';
 
-const main = process.argv[4] || 'main.py';
+const main = process.argv[3] || 'main.py';
 
-const requirementsList = process.argv[5] || 'requirements';
+const requirementsList = process.argv[4] || 'requirements';
 
 const startDir = process.cwd()
 const webGuiDir = path.join(startDir, 'web-gui');
