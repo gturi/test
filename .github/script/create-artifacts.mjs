@@ -57,11 +57,14 @@ console.log('------------------------');
 console.log(execSync(`pip list`).toString('utf8'));
 console.log('------------------------');
 
+let addDataSeparator = process.platform === 'win32' ? ';' : ':';
+//let separator = process.platform === 'win32' ? '\\' : '/';
+
 // create ${appName} executable in server/dist
 const generateExecutableCmd = [
     `pyinstaller --onefile --name ${appName}`,
-    '--add-data "resources/templates:resources/templates"',
-    '--add-data "resources/home:resources/home"',
+    `--add-data "resources/templates${addDataSeparator}resources/templates"`,
+    `--add-data "resources/home${addDataSeparator}resources/home"`,
     `src/${main}`
 ].join(' ');
 console.log(`creating ${appName} executable in server/dist`);
