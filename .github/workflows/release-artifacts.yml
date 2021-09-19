@@ -13,13 +13,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            execName: main-linux
+            appName: main-linux
             artifactName: main-linux.tar.gz
           - os: windows-latest
-            execName: main-windows.exe
+            appName: main-windows.exe
             artifactName: main-windows.zip
           - os: macos-latest
-            execName: main-macos.app
+            appName: main-macos.app
             artifactName: main-macos.zip
     steps:
       - uses: actions/checkout@v1
@@ -29,26 +29,15 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - run: node .github/script/release-artifacts.mjs ${{ matrix.execName }}
-      - run: node .github/script/zip-artifacts.mjs ${{ matrix.execName }} ${{ matrix.artifactName }}
+      - run: node .github/script/release-artifacts.mjs ${{ matrix.appName }}
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.artifactName }}
-          path: server/dist/${{ matrix.execName }}
+          name: ${{ matrix.appName }}
+          path: server/dist/${{ matrix.appName }}
+      - run: >
+          node .github/script/zip-artifacts.mjs
+          ${{ matrix.appName }}
+          ${{ matrix.artifactName }}
       - uses: softprops/action-gh-release@v1
         with:
           files: server/dist/${{ matrix.artifactName }}
-
-  release:
-    needs: [create-artifact]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          path: dist
-      - run: pwd
-      - run: echo $HOME
-      - run: mkdir `pwd`/release
-      - run: ls -R
-      - run: cp -R `pwd`/dist/* `pwd`/release
-      - run: ls -laR
