@@ -19,11 +19,11 @@ switch(platform) {
     break;
   case 'win32':
     outDir = `${getCmdOutput('cd')}\\server\\dist`;
-    compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} ${outDir}\\${appName}`;
+    compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} -C ${outDir} ${appName}`;
     break;
   case 'darwin':
     outDir = `${getCmdOutput('pwd')}/server/dist`;
-    compressionCmd = `zip -j ${outDir}/${zipName} -C ${outDir} ${appName}`;
+    compressionCmd = `zip -j ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   default:
     throw new Error(`platform ${platform} not supported`);
