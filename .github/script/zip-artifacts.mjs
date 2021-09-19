@@ -7,25 +7,26 @@ const zipName = process.argv[3] || `${appName}.zip`;
 
 const platform = process.platform;
 let compressionCmd;
+let outDir;
 switch(platform) {
   case 'linux':
     console.log('LINUX ls');
     console.log(execSync('ls -laR').toString('utf8'));
-    const outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
+    outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
     compressionCmd = `tar -zcvf ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   case 'win32':
     console.log('WIN ls');
     console.log(execSync('cd').toString('utf8'));
     console.log(execSync('cd').toString('utf8'));
-    const outDir = `${execSync('cd').toString('utf8')}\\server\\dist`;
+    outDir = `${execSync('cd').toString('utf8')}\\server\\dist`;
     console.log(outDir);
     compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} \\${appName}`;
     break;
   case 'darwin':
     console.log('MAC ls');
     console.log(execSync('ls -laR').toString('utf8'));
-    const outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
+    outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
     compressionCmd = `zip ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   default:
