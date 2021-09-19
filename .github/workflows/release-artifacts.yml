@@ -46,8 +46,8 @@ jobs:
       - run: |
           DIR=`pwd`
           cd dist
-          zip $DIR/release/main-windows.zip main-windows.exe
-          zip $DIR/release/main-macos.zip main-macos.app
+          gzip -c main-windows.exe > $DIR/release/main-windows.gz
+          gzip -c main-macos.app > $DIR/release/main-macos.gz
           chmod u+x main-linux
           tar -zcvf $DIR/release/main-linux.tar.gz main-linux
       - run: ls -laR
