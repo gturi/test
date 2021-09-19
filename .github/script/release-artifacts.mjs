@@ -24,6 +24,7 @@ const platform = process.platform;
 let compressionCmd;
 switch(platform){
   case 'linux':
+    execSync('ls -laR');
     compressionCmd = `tar -zcvf server/dist/${zipName} server/dist/${appName}`
     break;
   case 'win32':
@@ -31,6 +32,7 @@ switch(platform){
     compressionCmd = `tar.exe -a -c -f server/dist/${zipName} server/dist/${appName}`
     break;
   case 'darwin':
+    execSync('ls -laR');
     compressionCmd = `zip server/dist/${zipName} server/dist/${appName}`
     break;
   default:
