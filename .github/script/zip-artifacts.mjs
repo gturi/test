@@ -24,7 +24,7 @@ switch(platform) {
     cwd = `${execSync('cd').toString('utf8')}`.trim().replace(/(\r\n|\n|\r)/gm, "");
     outDir = `${cwd}\\server\\dist`;
     console.log(outDir);
-    compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} \\${appName}`;
+    compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} ${outDir}\\${appName}`;
     break;
   case 'darwin':
     console.log('MAC ls');
