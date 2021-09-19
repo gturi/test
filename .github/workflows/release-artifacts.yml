@@ -13,11 +13,14 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifactName: main-linux
+            execName: main-linux
+            artifactName: main-linux.tar.gz
           - os: windows-latest
-            artifactName: main-windows.exe
+            execName: main-windows.exe
+            artifactName: main-windows.zip
           - os: macos-latest
-            artifactName: main-macos.app
+            execName: main-macos.app
+            artifactName: main-macos.zip
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
@@ -26,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - run: node .github/script/release-artifacts.mjs ${{ matrix.artifactName }}
+      - run: node .github/script/release-artifacts.mjs ${{ matrix.execName }} ${{ matrix.artifactName }}
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.artifactName }}
@@ -43,13 +46,7 @@ jobs:
       - run: echo $HOME
       - run: mkdir `pwd`/release
       - run: ls -R
-      - run: |
-          DIR=`pwd`
-          cd dist
-          gzip -c main-windows.exe > $DIR/release/main-windows.gz
-          gzip -c main-macos.app > $DIR/release/main-macos.gz
-          chmod u+x main-linux
-          tar -zcvf $DIR/release/main-linux.tar.gz main-linux
+      - run: cp -R `pwd`/dist/* `pwd`/release
       - run: ls -laR
       - uses: softprops/action-gh-release@v1
         with:
