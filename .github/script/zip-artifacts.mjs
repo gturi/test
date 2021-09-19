@@ -15,7 +15,7 @@ switch(platform) {
     console.log(execSync('ls -laR').toString('utf8'));
     cwd = `${execSync('pwd').toString('utf8')}`.trim().replace(/(\r\n|\n|\r)/gm, "");
     outDir = `${cwd}/server/dist`;
-    compressionCmd = `tar -zcvf ${outDir}/${cwd} ${outDir}/${appName}`;
+    compressionCmd = `tar -zcvf ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   case 'win32':
     console.log('WIN ls');
