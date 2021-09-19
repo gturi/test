@@ -29,7 +29,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - run: node .github/script/release-artifacts.mjs ${{ matrix.execName }} ${{ matrix.artifactName }}
+      - run: node .github/script/release-artifacts.mjs ${{ matrix.execName }}
+      - run: node .github/script/zip-artifacts.mjs ${{ matrix.execName }} ${{ matrix.artifactName }}
       #- uses: actions/upload-artifact@v2
       #  with:
       #    name: ${{ matrix.artifactName }}
