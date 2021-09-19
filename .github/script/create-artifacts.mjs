@@ -53,9 +53,13 @@ requirementsList.split(',').forEach(requirement => {
     execSync(`python -m pip install -r ${requirement}.txt`);
 });
 
+console.log('------------------------');
+execSync(`pip list`);
+console.log('------------------------');
+
 // create ${appName} executable in server/dist
 const generateExecutableCmd = [
-    `python -m pyinstaller src/${main} --onefile --name ${appName}`,
+    `pyinstaller src/${main} --onefile --name ${appName}`,
     '--add-data "resources/templates:resources/templates"',
     '--add-data "resources/home:resources/home"',
 ].join(' ');
