@@ -55,7 +55,7 @@ requirementsList.split(',').forEach(requirement => {
 
 // create ${appName} executable in server/dist
 const generateExecutableCmd = [
-    `pyinstaller src/${main} --onefile --name ${appName}`,
+    `python -m pyinstaller src/${main} --onefile --name ${appName}`,
     '--add-data "resources/templates:resources/templates"',
     '--add-data "resources/home:resources/home"',
 ].join(' ');
