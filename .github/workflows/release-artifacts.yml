@@ -30,10 +30,10 @@ jobs:
         with:
           python-version: '3.x'
       - run: node .github/script/release-artifacts.mjs ${{ matrix.execName }} ${{ matrix.artifactName }}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.artifactName }}
-          path: server/dist/${{ matrix.artifactName }}
+      #- uses: actions/upload-artifact@v2
+      #  with:
+      #    name: ${{ matrix.artifactName }}
+      #    path: server/dist/${{ matrix.artifactName }}
 
   release:
     needs: [create-artifact]

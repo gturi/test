@@ -44,4 +44,4 @@ switch(platform){
     throw new Error(`platform ${platform} not supported`);
 }
 console.log(`creating ${zipName} in server/dist`);
-execSync(compressionCmd);
+//execSync(compressionCmd);
