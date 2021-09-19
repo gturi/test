@@ -54,7 +54,7 @@ requirementsList.split(',').forEach(requirement => {
 });
 
 console.log('------------------------');
-execSync(`pip list`);
+console.log(execSync(`pip list`).toString('utf8'));
 console.log('------------------------');
 
 // create ${appName} executable in server/dist
