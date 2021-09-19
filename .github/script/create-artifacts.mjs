@@ -59,9 +59,10 @@ console.log('------------------------');
 
 // create ${appName} executable in server/dist
 const generateExecutableCmd = [
-    `pyinstaller src/${main} --onefile --name ${appName}`,
+    `pyinstaller --onefile --name ${appName}`,
     '--add-data "resources/templates:resources/templates"',
     '--add-data "resources/home:resources/home"',
+    `src/${main}`
 ].join(' ');
 console.log(`creating ${appName} executable in server/dist`);
 execSync(generateExecutableCmd);
