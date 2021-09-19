@@ -7,26 +7,29 @@ const zipName = process.argv[3] || `${appName}.zip`;
 
 const platform = process.platform;
 let compressionCmd;
-switch(platform){
+switch(platform) {
   case 'linux':
     console.log('LINUX ls');
     console.log(execSync('ls -laR').toString('utf8'));
-    console.log(execSync('pwd').toString('utf8'));
-    compressionCmd = `tar -zcvf server/dist/${zipName} server/dist/${appName}`
+    const outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
+    compressionCmd = `tar -zcvf ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   case 'win32':
     console.log('WIN ls');
-    console.log(execSync('dir').toString('utf8'));
-    compressionCmd = `tar.exe -a -c -f server/dist/${zipName} server/dist/${appName}`
+    console.log(execSync('cd').toString('utf8'));
+    console.log(execSync('cd').toString('utf8'));
+    const outDir = `${execSync('cd').toString('utf8')}\\server\\dist`;
+    console.log(outDir);
+    compressionCmd = `tar.exe -a -c -f ${outDir}\\${zipName} \\${appName}`;
     break;
   case 'darwin':
     console.log('MAC ls');
     console.log(execSync('ls -laR').toString('utf8'));
-    console.log(execSync('pwd').toString('utf8'));
-    compressionCmd = `zip server/dist/${zipName} server/dist/${appName}`
+    const outDir = `${execSync('pwd').toString('utf8')}/server/dist`;
+    compressionCmd = `zip ${outDir}/${zipName} ${outDir}/${appName}`;
     break;
   default:
     throw new Error(`platform ${platform} not supported`);
 }
 console.log(`creating ${zipName} in server/dist`);
-//execSync(compressionCmd);
+execSync(compressionCmd);
