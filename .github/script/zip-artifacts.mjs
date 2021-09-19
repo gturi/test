@@ -15,7 +15,7 @@ switch(platform) {
   case 'linux':
     console.log(execSync('ls -laR').toString('utf8'));
     outDir = `${getCmdOutput('pwd')}/server/dist`;
-    compressionCmd = `tar -zcvf ${outDir}/${zipName} ${outDir}/${appName}`;
+    compressionCmd = `tar -zcvf ${outDir}/${zipName} --directory=${outDir} ${appName}`;
     break;
   case 'win32':
     outDir = `${getCmdOutput('cd')}\\server\\dist`;
@@ -23,7 +23,7 @@ switch(platform) {
     break;
   case 'darwin':
     outDir = `${getCmdOutput('pwd')}/server/dist`;
-    compressionCmd = `zip -j ${outDir}/${zipName} ${outDir}/${appName}`;
+    compressionCmd = `zip -j ${outDir}/${zipName} -C ${outDir} ${appName}`;
     break;
   default:
     throw new Error(`platform ${platform} not supported`);
