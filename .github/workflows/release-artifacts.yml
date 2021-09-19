@@ -34,7 +34,10 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.artifactName }}
-          path: server/dist/${{ matrix.artifactName }}
+          path: server/dist/${{ matrix.execName }}
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: server/dist/${{ matrix.artifactName }}
 
   release:
     needs: [create-artifact]
@@ -49,6 +52,3 @@ jobs:
       - run: ls -R
       - run: cp -R `pwd`/dist/* `pwd`/release
       - run: ls -laR
-      - uses: softprops/action-gh-release@v1
-        with:
-          files: release/*
