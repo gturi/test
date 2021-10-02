@@ -1,9 +1,8 @@
 name: automerge
 
 on:
-  pull_request:
-    branches:
-      - develop
+  schedule:
+    - cron: '*/5 * * * *'
   check_suite:
     types:
       - completed
@@ -19,13 +18,11 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: "DanySK/yaagha@master"
+      - uses: "pascalgn/automerge-action@v0.14.3"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_FORKS: "false"
-          MERGE_LABELS: "dependencies"
-          BLOCK_LABELS: "blocked, wontfix, invalid"
+          #MERGE_LABELS: "dependencies"
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_DELETE_BRANCH: true
           MERGE_METHOD: "rebase"
-          DELETE_BRANCH_ON_CLOSE: "true"
-          GIT_USER_NAME: "gventurini"
-          GIT_USER_EMAIL: "giacomo.venturini3@gmail.com"
+          MERGE_RETRY_SLEEP: "60000"
