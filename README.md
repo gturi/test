@@ -1,6 +1,5 @@
 # youtube-dl-aas
 
-
 This project is a wrapper which exposes [youtube-dl](https://github.com/ytdl-org/youtube-dl) functionalities via REST API. It also comes with a simple GUI that allows to any device connected to the network to download videos from youtube-dl the supported sites. 
 
 ## Install
