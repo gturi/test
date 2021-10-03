@@ -1,12 +1,20 @@
 name: automerge
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
-  check_suite:
+  #schedule:
+  #  - cron: '*/5 * * * *'
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_run:
+    workflows: ["lint"]
     types:
       - completed
-  status: success
+  #check_suite:
+  #  types:
+  #    - completed
+  #status: {}
 
 jobs:
   log-github-actor:
