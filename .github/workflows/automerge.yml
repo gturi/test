@@ -26,11 +26,13 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: "pascalgn/automerge-action@v0.14.3"
+      - uses: "DanySK/yaagha@master"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          #MERGE_LABELS: "dependencies"
-          MERGE_COMMIT_MESSAGE: pull-request-title
-          MERGE_DELETE_BRANCH: true
-          MERGE_METHOD: "rebase"
-          MERGE_RETRY_SLEEP: "60000"
+          MERGE_FORKS: "false"
+          MERGE_LABELS: "dependencies"
+          MERGE_METHOD: "merge"
+          CLOSE_ON_CONFLICT: "false"
+          DELETE_BRANCH_ON_CLOSE: "true"
+          GIT_USER_NAME: "gventurini"
+          GIT_USER_EMAIL: "giacomo.venturini3@gmail.com"
