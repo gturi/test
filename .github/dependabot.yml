@@ -11,7 +11,7 @@ updates:
       interval: "daily"
     target-branch: "develop"
   - package-ecosystem: "npm"
-    directory: "/client"
+    directory: "/web-gui"
     schedule:
       interval: "daily"
     target-branch: "develop"
