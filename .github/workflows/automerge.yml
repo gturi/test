@@ -7,10 +7,10 @@ on:
     branches:
       - main
       - develop
-  workflow_run:
-    workflows: ["lint"]
-    types:
-      - completed
+  #workflow_run:
+  #  workflows: ["lint"]
+  #  types:
+  #    - completed
   #check_suite:
   #  types:
   #    - completed
@@ -22,9 +22,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
-  automerge:
+  wait-lint:
     needs: log-github-actor
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lewagon/wait-on-check-action@v1.0.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'lint'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+  automerge:
+    needs: wait-lint
     runs-on: ubuntu-latest
     steps:
       - uses: "DanySK/yaagha@master"
