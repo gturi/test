@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
+      - run: echo ${{ github.ref }}
   wait-lint:
     needs: log-github-actor
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
