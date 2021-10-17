@@ -23,19 +23,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
-  wait-lint:
+      - run: echo ${{ github.ref }}
+  #wait-lint:
+  #  needs: log-github-actor
+  #  if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: lewagon/wait-on-check-action@v1.0.0
+  #      with:
+  #        ref: ${{ github.ref }}
+  #        check-name: 'lint'
+  #        repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #        wait-interval: 10
+  # Unfortunately, there is no way to run this action after the jobs of lint and test workflow have ended successfully.
+  # Until an easy, deterministic and non wait/retry based solution exists, the lint and test steps will also be
+  # executed by this workflow
+  lint:
     needs: log-github-actor
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: lewagon/wait-on-check-action@v1.0.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          ref: ${{ github.ref }}
-          check-name: 'lint'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          node-version: '14'
+      - run: npm install
+      - run: npm run lint
+  test:
+    needs: log-github-actor
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+    strategy:
+      matrix:
+        os: [windows, macos, ubuntu]
+        node: ['10', '12', '14']
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm test
   automerge:
-    needs: wait-lint
+    needs: [log-github-actor, lint, test]
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
     runs-on: ubuntu-latest
     steps:
       - uses: "DanySK/yaagha@master"
